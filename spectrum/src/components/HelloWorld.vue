@@ -18,7 +18,9 @@ export default {
     document.body.appendChild(clickElem)
 
     let req = null
+    let getByteFrequencyDataAverage = null
     console.log(req)
+    console.log(getByteFrequencyDataAverage)
 
     let clicked = false
     addEventListener('click', async () => {
@@ -30,6 +32,7 @@ export default {
       const stream = await navigator.mediaDevices.getUserMedia({audio: true})
       const input = audioCtx.createMediaStreamSource(stream)
       const analyzer = audioCtx.createAnalyser()
+      // analyzer.fftSize = 256
       input.connect(analyzer)
 
       const canvas = document.createElement('canvas')
@@ -37,11 +40,16 @@ export default {
       canvas.height = innerHeight
       document.body.appendChild(canvas)
 
-      const timeDomainArray = new Float32Array(analyzer.fftSize)
-      // const frequencyArray = new Float32Array(analyzer.frequencyBinCount)
-      analyzer.getFloatFrequencyData(timeDomainArray)
+      // const timeDomainArray = new Uint8Array(analyzer.fftSize)
+      const frequencyArray = new Uint8Array(analyzer.frequencyBinCount)
       const render = () => {
-        this.view = Math.floor(timeDomainArray[0])
+        getByteFrequencyDataAverage = () => {
+          analyzer.getByteFrequencyData(frequencyArray)
+          return frequencyArray.reduce(function(previous, current) {
+            return previous + current
+          }) / analyzer.frequencyBinCount
+        }
+        this.view = Math.floor(getByteFrequencyDataAverage())
         req = requestAnimationFrame(render)
       }
       req = requestAnimationFrame(render)
