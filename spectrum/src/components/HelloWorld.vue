@@ -49,7 +49,13 @@ export default {
             return previous + current
           }) / analyzer.frequencyBinCount
         }
-        this.view = Math.floor(getByteFrequencyDataAverage())
+        let mathSolved = Math.floor(getByteFrequencyDataAverage() / 255 * 100) / 10
+          if (mathSolved < 1) {
+            this.view = mathSolved
+          }
+          else {
+            this.view = 1
+          }
         req = requestAnimationFrame(render)
       }
       req = requestAnimationFrame(render)
