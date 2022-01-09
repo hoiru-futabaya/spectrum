@@ -1,0 +1,31 @@
+{
+	"Version": 3,
+	"FileReferences": {
+		"Moc": "futaba.moc3",
+
+		"Motions": {
+			"Idle": [
+			  {"File":"Idle.motion3.json" ,"FadeInTime":1.0, "FadeOutTime":1.0}
+			]
+			},
+		"Textures": [
+			"futaba.512/texture_00.png"
+		],
+		"DisplayInfo": "futaba.cdi3.json"
+	},
+	
+	"Groups": [
+		{
+			"Target": "Parameter",
+			"Name": "LipSync",
+			"Ids": [
+				"ParamMouthOpenY"
+			]
+		},
+		{
+			"Target": "Parameter",
+			"Name": "EyeBlink",
+			"Ids": []
+		}
+	]
+}
